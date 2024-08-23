@@ -3,6 +3,6 @@ import 'package:meduim_challenge/provider/ref.dart';
 
 final myNotifierProvider = StateNotifierProvider<MyRef, MyState>(
   (ref) {
-    return MyRef(); 
+    return MyRef();
   },
 );

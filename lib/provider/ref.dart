@@ -6,8 +6,8 @@ import 'package:meduim_challenge/utils/services.dart';
 
 import '../models/mymodel.dart';
 
-part 'my_event.dart';
 part 'my_state.dart';
+part 'my_event.dart';
 part 'ref.freezed.dart';
 
 class MyRef extends StateNotifier<MyState> {
@@ -16,17 +16,10 @@ class MyRef extends StateNotifier<MyState> {
   Future<void> mapEventsToStates(MyEvent event) async {
     await event.when(
       fetchData: () async {
-        final isConnected = await AppServices.checkConnectivity();
-
-        if (isConnected) {
-          state = state.copyWith(isLoading: true);
-
+        state = state.copyWith(isLoading: true);
+        if (await AppServices.checkConnectivity()) {
           try {
-            print("true");
-
             final data = await MyDomain.getData();
-            print(data.toString());
-            print("true 2");
 
             state = state.copyWith(
               myModelList: data,
@@ -36,7 +29,7 @@ class MyRef extends StateNotifier<MyState> {
           } catch (e) {
             state = state.copyWith(
               isLoading: false,
-              isConnected: false,
+              isConnected: true,
             );
           }
         } else {
